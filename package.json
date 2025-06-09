@@ -1,0 +1,16 @@
+{
+  "name": "socialism-2.0-site",
+  "version": "1.0.0",
+  "description": "Socialism 2.0 website with admin backend",
+  "scripts": {
+    "start": "netlify dev"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}

@@ -1,0 +1,722 @@
+:root {
+    --primary-color: #E91E63; /* Кибер-розовый / Неоновый красный */
+    --secondary-color: #2c3e50; /* Темно-сине-серый */
+    --background-color: #1a1d24; /* Очень темно-серый, почти черный */
+    --text-color: #ecf0f1; /* Светло-серый */
+    --accent-color: #00bcd4; /* Яркий циан для акцентов */
+    --card-bg: #22262e;
+
+    --font-main: 'Montserrat', sans-serif;
+    --font-headings: 'Orbitron', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.7;
+    overflow-x: hidden; /* Предотвратить горизонтальный скролл от частиц */
+}
+
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Частицы на заднем плане */
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Header */
+header {
+    background-color: rgba(26, 29, 36, 0.85); /* Полупрозрачный фон */
+    backdrop-filter: blur(10px); /* Эффект размытия для современных браузеров */
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.3);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--font-headings);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.logo span {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; text-shadow: 0 0 5px var(--primary-color); }
+    100% { opacity: 0.7; }
+}
+
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 25px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--primary-color);
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+.admin-login-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.admin-login-btn:hover {
+    background-color: #d81b60; /* Темнее розовый */
+    transform: translateY(-2px);
+}
+
+
+/* Hero Section */
+#hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    position: relative; /* Для псевдо-элементов, если понадобятся */
+    background: linear-gradient(rgba(26, 29, 36, 0.7), rgba(26, 29, 36, 0.9)), url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+    /* Замените URL на свое изображение или видео */
+}
+
+.hero-content h1 {
+    font-family: var(--font-headings);
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: 900;
+    letter-spacing: 2px;
+    /* text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color); */
+}
+
+/* Glitch Effect */
+.glitch {
+  position: relative;
+  /* color: white; */
+  /* mix-blend-mode: lighten; */
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--background-color); /* Mask color */
+  overflow: hidden;
+}
+.glitch::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--primary-color);
+  animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+}
+.glitch::after {
+  left: -2px;
+  text-shadow: -2px 0 var(--accent-color), 2px 2px var(--primary-color);
+  animation: glitch-anim-2 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip-path: inset(10% 0 15% 0); }
+  20% { clip-path: inset(0 0 5% 0); }
+  40% { clip-path: inset(25% 0 20% 0); }
+  60% { clip-path: inset(10% 0 35% 0); }
+  80% { clip-path: inset(30% 0 5% 0); }
+  100% { clip-path: inset(5% 0 10% 0); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip-path: inset(80% 0 5% 0); }
+  20% { clip-path: inset(55% 0 10% 0); }
+  40% { clip-path: inset(90% 0 1% 0); }
+  60% { clip-path: inset(70% 0 20% 0); }
+  80% { clip-path: inset(85% 0 5% 0); }
+  100% { clip-path: inset(60% 0 15% 0); }
+}
+
+
+.hero-content p {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.9;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 50px; /* Округлый вид */
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cta-button:hover {
+    background-color: #d81b60; /* Темнее розовый */
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(233, 30, 99, 0.6);
+}
+
+/* Content Sections */
+.content-section {
+    padding: 80px 0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.content-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.content-section h2 {
+    font-family: var(--font-headings);
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 50px;
+    color: var(--primary-color);
+    position: relative;
+}
+.content-section h2::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background-color: var(--accent-color);
+    margin: 10px auto 0;
+}
+
+
+/* Manifesto Section */
+#manifesto .manifesto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+.manifesto-item {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.manifesto-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.manifesto-item img {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+.manifesto-item h3 {
+    font-family: var(--font-headings);
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+/* Principles Section */
+.alt-bg {
+    background-color: var(--secondary-color);
+}
+#principles .principles-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+.principle-card {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    border-left: 5px solid var(--primary-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.principle-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(233, 30, 99, 0.3);
+}
+.principle-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+.principle-card h3 {
+    font-family: var(--font-headings);
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+/* News Section */
+#news .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+.news-item {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.news-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+.news-item img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+.news-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.news-content h3 {
+    font-family: var(--font-headings);
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+.news-meta {
+    font-size: 0.85rem;
+    color: #bbb;
+    margin-bottom: 15px;
+}
+.news-content p {
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+.read-more {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: bold;
+    align-self: flex-start;
+    transition: color 0.3s ease;
+}
+.read-more:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    color: white;
+    text-align: center;
+}
+.cta-section h2 {
+    color: white; /* Переопределяем цвет заголовка для этой секции */
+    margin-bottom: 20px;
+}
+.cta-section h2::after { /* Убираем стандартный акцентный подчерк */
+    display: none;
+}
+.cta-section p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+#subscribe-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+#subscribe-form input[type="email"] {
+    padding: 0.8rem 1.2rem;
+    border-radius: 5px;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    font-size: 1rem;
+    width: 300px;
+    outline: none;
+}
+#subscribe-form input[type="email"]::placeholder {
+    color: rgba(255,255,255,0.7);
+}
+#subscribe-form .cta-button {
+    background-color: white;
+    color: var(--primary-color);
+    box-shadow: none;
+}
+#subscribe-form .cta-button:hover {
+    background-color: #f0f0f0;
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+/* Footer */
+footer {
+    background-color: var(--secondary-color);
+    color: #aaa;
+    text-align: center;
+    padding: 30px 0;
+    font-size: 0.9rem;
+}
+footer .social-links a {
+    color: #aaa;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+footer .social-links a:hover {
+    color: var(--primary-color);
+}
+
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1001; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    margin: 15% auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 450px;
+    border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.4);
+    position: relative;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {transform: translateY(-50px); opacity: 0;}
+    to {transform: translateY(0); opacity: 1;}
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: var(--primary-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#adminLoginForm label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+#adminLoginForm input[type="text"],
+#adminLoginForm input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+#adminLoginForm button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+#adminLoginForm button[type="submit"]:hover {
+    background-color: #d81b60;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        align-items: center;
+    }
+    nav ul {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    nav ul li {
+        margin: 5px 10px;
+    }
+    .admin-login-btn {
+        margin-top: 15px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.8rem;
+    }
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+    .content-section h2 {
+        font-size: 2.2rem;
+    }
+    #subscribe-form {
+        flex-direction: column;
+        align-items: center;
+    }
+    #subscribe-form input[type="email"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .modal-content {
+        margin: 25% auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+     .logo {
+        font-size: 1.5rem;
+    }
+    .logo span {
+        font-size: 1.2rem;
+    }
+    nav ul li a {
+        font-size: 0.9rem;
+    }
+}
+/* ... your existing css ... */
+
+/* Admin Panel Specific Styles (admin.html) */
+#admin-panel {
+    padding-top: 100px; /* Adjust based on header height */
+    min-height: 80vh;
+}
+
+#admin-panel .container h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    font-family: var(--font-headings);
+}
+
+#admin-panel .admin-actions {
+    margin-bottom: 30px;
+    text-align: right;
+}
+
+#admin-panel .admin-actions .cta-button {
+    margin-left: 10px;
+}
+
+.news-management-form {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+.news-management-form h3 {
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    font-family: var(--font-headings);
+}
+
+.news-management-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.news-management-form input[type="text"],
+.news-management-form textarea,
+.news-management-form input[type="url"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.news-management-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.news-management-form .form-actions button {
+    margin-right: 10px;
+}
+.news-management-form .form-actions button.cancel-btn {
+    background-color: var(--secondary-color);
+}
+.news-management-form .form-actions button.cancel-btn:hover {
+    background-color: #3e5771;
+}
+
+
+.admin-news-list .news-item {
+    margin-bottom: 20px;
+    /* Re-use .news-item styles, but add admin controls */
+}
+
+.admin-news-list .news-item .admin-controls {
+    padding: 10px 20px;
+    background-color: rgba(0,0,0,0.2);
+    text-align: right;
+}
+
+.admin-news-list .news-item .admin-controls button {
+    margin-left: 10px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+.admin-news-list .news-item .admin-controls .edit-btn {
+    background-color: var(--accent-color);
+    color: var(--background-color);
+}
+.admin-news-list .news-item .admin-controls .edit-btn:hover {
+    background-color: #00a4b6;
+}
+.admin-news-list .news-item .admin-controls .delete-btn {
+    background-color: #c0392b; /* Reddish */
+}
+.admin-news-list .news-item .admin-controls .delete-btn:hover {
+    background-color: #a93226;
+}
+#logout-btn {
+    background-color: #7f8c8d;
+}
+#logout-btn:hover {
+    background-color: #6c7a7b;
+}
+
+/* Message area for admin panel */
+#admin-message {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    display: none; /* Hidden by default */
+}
+#admin-message.success {
+    background-color: #27ae60;
+    color: white;
+}
+#admin-message.error {
+    background-color: #c0392b;
+    color: white;
+}

@@ -1,0 +1,19 @@
+[build]
+  command = "# no build command for static site" # Or your build tool if you use one
+  publish = "public"      # Directory with your static HTML/CSS/JS
+  functions = "netlify/functions" # Directory for serverless functions
+
+[[redirects]]
+  from = "/admin/login"
+  to = "/.netlify/functions/auth"
+  status = 200 # Rewrite, not a redirect
+
+[[redirects]]
+  from = "/api/news"
+  to = "/.netlify/functions/news-api"
+  status = 200
+
+[[redirects]]
+  from = "/api/news/*"
+  to = "/.netlify/functions/news-api"
+  status = 200

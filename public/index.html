@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Социализм 2.0: Эра Равенства</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <header>
+        <div class="container">
+            <div class="logo">Социализм <span>2.0</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#hero">Главная</a></li>
+                    <li><a href="#manifesto">Манифест</a></li>
+                    <li><a href="#principles">Принципы</a></li>
+                    <li><a href="#news">Новости</a></li>
+                    <li><a href="#join">Действуй</a></li>
+                </ul>
+            </nav>
+            <button class="admin-login-btn" onclick="showAdminLogin()">Вход для Админа</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="hero-content">
+                <h1 class="glitch" data-text="БУДУЩЕЕ РАВЕНСТВА">БУДУЩЕЕ РАВЕНСТВА</h1>
+                <p>Переосмысление идей социализма для цифровой эпохи. Вместе мы строим справедливый мир.</p>
+                <a href="#manifesto" class="cta-button">Узнать больше</a>
+            </div>
+        </section>
+
+        <section id="manifesto" class="content-section">
+            <div class="container">
+                <h2>Наш Манифест</h2>
+                <div class="manifesto-grid">
+                    <div class="manifesto-item">
+                        <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Технологии для всех">
+                        <h3>Технологии для Всех</h3>
+                        <p>Доступ к современным технологиям и знаниям должен быть универсальным правом, а не привилегией.</p>
+                    </div>
+                    <div class="manifesto-item">
+                        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80" alt="Экономическая справедливость">
+                        <h3>Экономическая Справедливость</h3>
+                        <p>Борьба с неравенством через справедливое распределение ресурсов и возможностей.</p>
+                    </div>
+                    <div class="manifesto-item">
+                        <img src="https://avatars.mds.yandex.net/i?id=83ff86a608910ffef1f056da42eab0c17e9d8f32-5704334-images-thumbs&n=13" alt="Глобальная солидарность">
+                        <h3>Глобальная Солидарность</h3>
+                        <p>Объединение усилий для решения глобальных проблем – от климата до пандемий.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="principles" class="content-section alt-bg">
+            <div class="container">
+                <h2>Ключевые Принципы</h2>
+                <div class="principles-container">
+                    <div class="principle-card">
+                        <div class="principle-icon">💡</div>
+                        <h3>Инновации и Прогресс</h3>
+                        <p>Использование научного подхода и технологических достижений для улучшения жизни каждого.</p>
+                    </div>
+                    <div class="principle-card">
+                        <div class="principle-icon">🌍</div>
+                        <h3>Экологическая Ответственность</h3>
+                        <p>Устойчивое развитие и гармония с природой как основа будущего.</p>
+                    </div>
+                    <div class="principle-card">
+                        <div class="principle-icon">🤝</div>
+                        <h3>Прямое Участие</h3>
+                        <p>Демократизация принятия решений и вовлечение граждан в управление обществом.</p>
+                    </div>
+                     <div class="principle-card">
+                        <div class="principle-icon">⚖️</div>
+                        <h3>Равенство Возможностей</h3>
+                        <p>Каждый человек имеет право на самореализацию независимо от происхождения.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="content-section">
+            <div class="container">
+                <h2>Последние Новости и Статьи</h2>
+                <div class="news-grid">
+                    <!-- Новости будут загружены сюда скриптом -->
+                    <p style="text-align:center; width:100%;">Загрузка новостей...</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="join" class="content-section cta-section">
+            <div class="container">
+                <h2>Присоединяйся к Движению!</h2>
+                <p>Твой голос важен. Вместе мы можем изменить мир к лучшему. Стань частью будущего сегодня.</p>
+                <form id="subscribe-form">
+                    <input type="email" placeholder="Ваш E-mail" required>
+                    <button type="submit" class="cta-button">Подписаться на обновления</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="currentYear"></span> Социализм 2.0. Все права защищены... или обобществлены?</p>
+            <div class="social-links">
+                <a href="#">Facebook</a> | <a href="https://t.me/RussianSocialist6" target="_blank" rel="noopener noreferrer">Telegram</a> | <a href="#">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно для входа админа (скрыто по умолчанию) -->
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAdminLogin()">×</span>
+            <h2>Вход для Администратора</h2>
+            <form id="adminLoginForm">
+                <label for="adminUser">Логин:</label>
+                <input type="text" id="adminUser" name="adminUser" required>
+                <label for="adminPass">Пароль:</label>
+                <input type="password" id="adminPass" name="adminPass" required>
+                <button type="submit">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

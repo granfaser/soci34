@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Социализм 2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="particles-js-admin"></div> <!-- Optional: particles on admin page -->
+
+    <header>
+        <div class="container">
+            <div class="logo">Социализм <span>2.0</span> - Админ</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">На сайт</a></li>
+                </ul>
+            </nav>
+            <button id="logout-btn" class="admin-login-btn" style="background-color: #7f8c8d;">Выйти</button>
+        </div>
+    </header>
+
+    <main id="admin-panel">
+        <div class="container">
+            <h1>Управление Новостями</h1>
+            <div id="admin-message"></div>
+
+            <div class="admin-actions">
+                <button id="add-news-btn" class="cta-button">Добавить Новость</button>
+            </div>
+
+            <div id="news-form-container" class="news-management-form" style="display: none;">
+                <h3 id="form-title">Добавить Новость</h3>
+                <form id="manage-news-form">
+                    <input type="hidden" id="news-id" name="newsId">
+                    <div>
+                        <label for="news-title">Заголовок:</label>
+                        <input type="text" id="news-title" name="title" required>
+                    </div>
+                    <div>
+                        <label for="news-content">Содержание:</label>
+                        <textarea id="news-content" name="content" required></textarea>
+                    </div>
+                    <div>
+                        <label for="news-image-url">URL Изображения:</label>
+                        <input type="url" id="news-image-url" name="imageUrl" placeholder="https://example.com/image.jpg">
+                    </div>
+                     <div>
+                        <label for="news-author">Автор (необязательно):</label>
+                        <input type="text" id="news-author" name="author">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="cta-button">Сохранить</button>
+                        <button type="button" id="cancel-edit-btn" class="cta-button cancel-btn" style="display: none;">Отмена</button>
+                    </div>
+                </form>
+            </div>
+
+            <h2>Список Новостей</h2>
+            <div id="admin-news-list" class="news-grid">
+                <p>Загрузка новостей...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="currentYearAdmin"></span> Социализм 2.0 Админ-панель.</p>
+        </div>
+    </footer>
+    
+    <!-- Optional: If you want particles on admin page, ensure particles-js div exists and is targeted -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script> -->
+    <script src="admin_script.js"></script>
+</body>
+</html>

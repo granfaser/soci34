@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1700000000001",
+    "title": "Запуск Платформы Социализм 2.0",
+    "content": "Сегодня мы рады объявить о запуске нашей новой платформы, нацеленной на переосмысление идей социализма в цифровую эпоху. Присоединяйтесь к обсуждению!",
+    "imageUrl": "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80",
+    "publishedDate": "2024-03-10T10:00:00.000Z",
+    "author": "Команда Социализм 2.0"
+  },
+  {
+    "id": "1700000000002",
+    "title": "Технологии для Всех: Наш Манифест",
+    "content": "Мы верим, что доступ к технологиям должен быть универсальным правом. Узнайте больше о наших принципах в разделе 'Манифест'.",
+    "imageUrl": "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+    "publishedDate": "2024-03-12T12:30:00.000Z",
+    "author": "Редакция"
+  }
+]
