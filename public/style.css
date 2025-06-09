@@ -720,3 +720,62 @@ footer .social-links a:hover {
     background-color: #c0392b;
     color: white;
 }
+/* ... ваш существующий CSS ... */
+
+/* Стили для ссылок на новостных карточках */
+.news-item a.news-item-link,
+.news-content h3 a {
+    text-decoration: none;
+    color: inherit; /* Наследовать цвет от родителя (для заголовка) */
+    display: block; /* Чтобы ссылка-картинка занимала всю область картинки */
+}
+.news-content h3 a {
+    display: inline; /* Заголовки обычно inline или inline-block */
+    color: var(--primary-color); /* Или ваш основной цвет для заголовков новостей */
+}
+
+.news-content h3 a:hover {
+    color: var(--accent-color); 
+    text-decoration: underline;
+}
+.news-item a.news-item-link:hover img {
+    opacity: 0.85; /* Легкий эффект при наведении на картинку */
+    transition: opacity 0.3s ease;
+}
+
+
+/* --- Если вы выбрали горизонтальную прокрутку для новостей на главной --- */
+/* Раскомментируйте и настройте, если нужно */
+/*
+#news .news-grid {
+    display: flex;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+    padding-bottom: 20px; 
+    gap: 20px; 
+    scroll-snap-type: x mandatory; // Опционально, для "прилипания" карточек при скролле
+}
+
+#news .news-grid::-webkit-scrollbar { // Стилизация скроллбара (опционально)
+    height: 8px;
+}
+#news .news-grid::-webkit-scrollbar-track {
+    background: var(--secondary-color);
+    border-radius: 4px;
+}
+#news .news-grid::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 4px;
+}
+#news .news-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+
+#news .news-item {
+    flex: 0 0 auto; 
+    width: 320px; 
+    scroll-snap-align: start; // Опционально, для "прилипания"
+}
+*/
+/* --- Конец стилей для горизонтальной прокрутки --- */

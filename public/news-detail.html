@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новость - Социализм 2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Стили специфичные для страницы детализации новости */
+        #news-detail-content {
+            padding-top: 120px; /* Отступ от фиксированного хедера */
+            padding-bottom: 60px;
+            color: var(--text-color);
+        }
+        .news-detail-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        .news-detail-container img.featured-image {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 25px;
+        }
+        .news-detail-container h1 {
+            font-family: var(--font-headings);
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .news-meta-detail {
+            font-size: 0.9rem;
+            color: #bbb;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--secondary-color);
+            padding-bottom: 15px;
+        }
+        .news-full-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            white-space: pre-wrap; /* Сохраняет переносы строк из текста новости */
+            word-wrap: break-word; /* Перенос длинных слов */
+        }
+        .news-full-text p { /* Добавим отступы между параграфами, если текст разбит на них */
+            margin-bottom: 1em;
+        }
+        .news-full-text p:last-child {
+            margin-bottom: 0;
+        }
+        .back-to-news-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-to-news-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .news-detail-container h1 {
+                font-size: 2rem;
+            }
+            .news-detail-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js-detail"></div>
+
+    <header>
+        <div class="container">
+            <div class="logo">Социализм <span>2.0</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#hero">Главная</a></li>
+                    <li><a href="index.html#manifesto">Манифест</a></li>
+                    <li><a href="index.html#principles">Принципы</a></li>
+                    <li><a href="index.html#news">Новости</a></li>
+                    <li><a href="index.html#join">Действуй</a></li>
+                </ul>
+            </nav>
+            <button class="admin-login-btn" onclick="triggerAdminLogin()">Вход для Админа</button>
+        </div>
+    </header>
+
+    <main id="news-detail-content">
+        <div class="container">
+            <div class="news-detail-container">
+                <img id="news-image" src="https://via.placeholder.com/800x400/2c3e50/ecf0f1?text=Загрузка..." alt="Новость" class="featured-image">
+                <h1 id="news-title-full">Заголовок новости загружается...</h1>
+                <p id="news-meta-full" class="news-meta-detail">Метаданные...</p>
+                <div id="news-text-full" class="news-full-text">
+                    <p>Текст новости загружается...</p>
+                </div>
+                <a href="index.html#news" class="back-to-news-link">← Вернуться к списку новостей</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="currentYearDetail"></span> Социализм 2.0. Все права защищены... или обобществлены?</p>
+        </div>
+    </footer>
+
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAdminLoginModal()">×</span>
+            <h2>Вход для Администратора</h2>
+            <form id="adminLoginFormDetail">
+                <label for="adminUserDetail">Логин:</label>
+                <input type="text" id="adminUserDetail" name="adminUser" required>
+                <label for="adminPassDetail">Пароль:</label>
+                <input type="password" id="adminPassDetail" name="adminPass" required>
+                <button type="submit">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (document.getElementById('particles-js-detail')) {
+                 particlesJS("particles-js-detail", { 
+                    "particles": { "number": {"value": 50, "density": {"enable": true, "value_area": 800}}, "color": {"value": "#E91E63"}, "shape": {"type": "circle"}, "opacity": {"value": 0.3, "random": true}, "size": {"value": 2, "random": true}, "line_linked": {"enable": true, "distance": 150, "color": "#00bcd4", "opacity": 0.2, "width": 1}, "move": {"enable": true, "speed": 2, "direction": "none", "out_mode": "out"}},
+                    "interactivity": {"detect_on": "canvas", "events": {"onhover": {"enable": false}, "onclick": {"enable": false}}},
+                    "retina_detect": true
+                });
+            }
+            const currentYearSpan = document.getElementById('currentYearDetail');
+            if(currentYearSpan) currentYearSpan.textContent = new Date().getFullYear();
+
+            const params = new URLSearchParams(window.location.search);
+            const newsId = params.get('id');
+
+            const newsImageEl = document.getElementById('news-image');
+            const newsTitleEl = document.getElementById('news-title-full');
+            const newsMetaEl = document.getElementById('news-meta-full');
+            const newsTextEl = document.getElementById('news-text-full');
+
+            if (newsId) {
+                fetch(`/api/news/${newsId}`) // Прямой запрос к новости по ID
+                    .then(response => {
+                        if (!response.ok) {
+                            if(response.status === 404) throw new Error('News not found (404)');
+                            throw new Error(`Network response was not ok: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(newsItem => { 
+                        if (newsItem && newsItem.id) {
+                            document.title = `${newsItem.title} - Социализм 2.0`;
+                            newsImageEl.src = newsItem.imageUrl || 'https://via.placeholder.com/800x400/2c3e50/ecf0f1?text=Новость';
+                            newsImageEl.alt = newsItem.title;
+                            newsTitleEl.textContent = newsItem.title;
+                            newsMetaEl.innerHTML = `Опубликовано: ${new Date(newsItem.publishedDate).toLocaleDateString('ru-RU')} | Автор: ${newsItem.author || 'Редакция'}`;
+                            
+                            newsTextEl.innerHTML = ''; 
+                            newsItem.content.split('\n').forEach(paragraphText => {
+                                if (paragraphText.trim() !== '' || newsTextEl.children.length > 0) { // Не добавляем пустые параграфы в начале
+                                    const p = document.createElement('p');
+                                    p.textContent = paragraphText;
+                                    newsTextEl.appendChild(p);
+                                }
+                            });
+                            // Если после обработки весь текст пустой (например, только переносы строк), добавим один пустой параграф, чтобы не было пусто
+                            if (newsTextEl.children.length === 0 && newsItem.content.trim() === '') {
+                                newsTextEl.innerHTML = '<p> </p>';
+                            }
+
+                        } else { 
+                            console.warn("Received news item was not valid:", newsItem);
+                            handleNewsNotFound("Данные новости не корректны.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Failed to load news detail:', error);
+                        if (error.message.includes('404')) {
+                            handleNewsNotFound("Новость не найдена (404).");
+                        } else {
+                            handleNewsNotFound(`Ошибка загрузки: ${error.message}`);
+                        }
+                    });
+            } else {
+                handleNewsNotFound("ID новости не указан в URL.");
+            }
+
+            function handleNewsNotFound(message = 'Запрашиваемая новость не существует или была удалена.') {
+                document.title = 'Новость не найдена - Социализм 2.0';
+                newsTitleEl.textContent = 'Новость не найдена';
+                newsTextEl.innerHTML = `<p>${message}</p>`;
+                if (newsImageEl) newsImageEl.style.display = 'none';
+            }
+
+            const adminModalDetail = document.getElementById('adminLoginModal');
+            const adminLoginFormDetail = document.getElementById('adminLoginFormDetail');
+
+            window.triggerAdminLogin = () => { 
+                if (adminModalDetail) adminModalDetail.style.display = 'block';
+            }
+            window.closeAdminLoginModal = () => {
+                if (adminModalDetail) adminModalDetail.style.display = 'none';
+            }
+            
+            if(adminModalDetail) {
+                window.addEventListener('click', (event) => {
+                    if (event.target == adminModalDetail) {
+                        adminModalDetail.style.display = "none";
+                    }
+                });
+            }
+
+            if (adminLoginFormDetail) {
+                adminLoginFormDetail.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const username = e.target.adminUser.value;
+                    const password = e.target.adminPass.value;
+                    try {
+                        const response = await fetch('/admin/login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ username, password }),
+                        });
+                        const result = await response.json();
+                        if (response.ok && result.token) {
+                            localStorage.setItem('adminToken', result.token);
+                            alert('Вход успешен! Перенаправление в админ-панель...');
+                            if (adminModalDetail) adminModalDetail.style.display = 'none';
+                            window.location.href = 'admin.html';
+                        } else {
+                            alert(`Ошибка входа: ${result.message || 'Неверный логин или пароль!'}`);
+                        }
+                    } catch (error) {
+                        console.error('Login error:', error);
+                        alert('Произошла ошибка при попытке входа.');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

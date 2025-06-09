@@ -1,49 +1,34 @@
+// Полное содержимое файла: netlify/functions/news-api.js
+
 const fs = require('fs');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 
-// Path to the news.json file, relative to the function's execution context
-// When deployed, Netlify bundles files from the function's directory.
-// For local dev with `netlify dev`, it needs to resolve from project root.
 const dataFilePath = process.env.NETLIFY_DEV
-    ? path.resolve(__dirname, 'data', 'news.json') // Local dev
-    : path.resolve(process.cwd(), 'netlify', 'functions', 'data', 'news.json'); // Deployed
+    ? path.resolve(__dirname, 'data', 'news.json')
+    : path.resolve(process.cwd(), 'netlify', 'functions', 'data', 'news.json');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-very-strong-secret-key-for-jwt';
 
-// In-memory cache of news data to simulate writes for the session
-// This will be re-read from file on cold starts or new deployments
 let newsData = [];
-
 try {
     const rawData = fs.readFileSync(dataFilePath, 'utf-8');
     newsData = JSON.parse(rawData);
 } catch (error) {
     console.error("Error reading or parsing news.json:", error);
-    // If file doesn't exist or is invalid, start with an empty array
     newsData = [];
 }
 
-
-// Helper to "persist" changes to the in-memory array.
-// In a real scenario with Netlify Functions, you'd write to a database.
-// Writing to the bundled file system is not persistent across deployments/invocations.
-// This function primarily serves to update the 'newsData' variable.
 function writeNewsData(data) {
-    newsData = data; // Update in-memory store
-    // console.log("Simulated write. Data in memory:", newsData);
-    // Note: The following fs.writeFileSync will only work reliably in local dev.
-    // On deployed Netlify, it might write to a temporary, ephemeral location.
-    // The `news.json` bundled with the function will not be permanently changed by this.
+    newsData = data;
     try {
-        if (process.env.NETLIFY_DEV) { // Allow writing locally for easier testing
+        if (process.env.NETLIFY_DEV) {
             fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf-8');
         }
     } catch (writeError) {
         console.error("Error writing news.json (this is expected on deployed Netlify):", writeError);
     }
 }
-
 
 function verifyToken(event) {
     const authHeader = event.headers.authorization;
@@ -61,23 +46,58 @@ function verifyToken(event) {
 
 exports.handler = async (event, context) => {
     const method = event.httpMethod;
-    const pathParts = event.path.split('/').filter(Boolean); // e.g. ['', 'api', 'news', 'id'] -> ['api', 'news', 'id']
-    const resourceId = pathParts.length > 2 ? pathParts[2] : null; // Assumes /api/news/:id
-
-    // Public GET all news
-    if (method === 'GET' && !resourceId) {
-        return {
-            statusCode: 200,
-            body: JSON.stringify(newsData.sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate))),
-            headers: { 'Content-Type': 'application/json' },
-        };
+    // Определяем resourceId из пути
+    // event.path для Netlify Functions включает префикс функции, например, /.netlify/functions/news-api/ID
+    // или если настроены редиректы, то может быть /api/news/ID
+    // Этот код пытается быть гибким
+    let resourceId = null;
+    if (event.path) {
+        const pathParts = event.path.split('/');
+        // Ищем ID после 'news-api' или 'news' (в зависимости от того, как пришел path)
+        const apiSegmentIndex = pathParts.findIndex(segment => segment === 'news-api' || segment === 'news');
+        if (apiSegmentIndex !== -1 && apiSegmentIndex < pathParts.length - 1) {
+            const potentialId = pathParts[apiSegmentIndex + 1];
+            // Простая проверка, что ID не пустой и не является другим сегментом пути (например, частью query string)
+            if (potentialId && !potentialId.includes('?')) {
+                 resourceId = potentialId;
+            }
+        }
     }
+
+
+    // --- НАЧАЛО ИЗМЕНЕННОГО БЛОКА ДЛЯ GET ---
+    if (method === 'GET') {
+        if (resourceId) { // Если есть ID, пытаемся вернуть одну новость
+            const singleItem = newsData.find(item => item.id === resourceId);
+            if (singleItem) {
+                return {
+                    statusCode: 200,
+                    body: JSON.stringify(singleItem),
+                    headers: { 'Content-Type': 'application/json' },
+                };
+            } else {
+                return {
+                    statusCode: 404,
+                    body: JSON.stringify({ message: 'Новость не найдена' }),
+                    headers: { 'Content-Type': 'application/json' },
+                };
+            }
+        } else { // Если ID нет, возвращаем все новости
+            return {
+                statusCode: 200,
+                body: JSON.stringify(newsData.sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate))),
+                headers: { 'Content-Type': 'application/json' },
+            };
+        }
+    }
+    // --- КОНЕЦ ИЗМЕНЕННОГО БЛОКА ДЛЯ GET ---
+
 
     // All other operations require authentication
     const decodedToken = verifyToken(event);
     if (!decodedToken || decodedToken.role !== 'admin') {
         return {
-            statusCode: 401, // Unauthorized or 403 Forbidden
+            statusCode: 401,
             body: JSON.stringify({ message: 'Access Denied: Valid token required for this operation.' }),
             headers: { 'Content-Type': 'application/json' },
         };
@@ -85,7 +105,7 @@ exports.handler = async (event, context) => {
 
     try {
         switch (method) {
-            case 'POST': // Create news
+            case 'POST':
                 if (resourceId) return { statusCode: 400, body: JSON.stringify({ message: 'Cannot POST to a specific ID.' }) };
                 
                 const newItemData = JSON.parse(event.body);
@@ -98,14 +118,14 @@ exports.handler = async (event, context) => {
                     publishedDate: new Date().toISOString(),
                 };
                 const updatedDataForPost = [...newsData, newItem];
-                writeNewsData(updatedDataForPost); // Simulates write
+                writeNewsData(updatedDataForPost);
                 return {
                     statusCode: 201,
                     body: JSON.stringify({ message: 'Новость успешно создана (изменения в памяти)', item: newItem }),
                     headers: { 'Content-Type': 'application/json' },
                 };
 
-            case 'PUT': // Update news
+            case 'PUT':
                 if (!resourceId) return { statusCode: 400, body: JSON.stringify({ message: 'Missing news ID for update.' }) };
                 
                 const updatedItemData = JSON.parse(event.body);
@@ -113,7 +133,7 @@ exports.handler = async (event, context) => {
                 const updatedDataForPut = newsData.map(item => {
                     if (item.id === resourceId) {
                         itemUpdated = true;
-                        return { ...item, ...updatedItemData, id: item.id, publishedDate: item.publishedDate }; // Keep original ID and date
+                        return { ...item, ...updatedItemData, id: item.id, publishedDate: item.publishedDate };
                     }
                     return item;
                 });
@@ -121,14 +141,14 @@ exports.handler = async (event, context) => {
                 if (!itemUpdated) {
                     return { statusCode: 404, body: JSON.stringify({ message: 'Новость не найдена.' }) };
                 }
-                writeNewsData(updatedDataForPut); // Simulates write
+                writeNewsData(updatedDataForPut);
                 return {
                     statusCode: 200,
                     body: JSON.stringify({ message: 'Новость успешно обновлена (изменения в памяти)', item: updatedDataForPut.find(i => i.id === resourceId) }),
                     headers: { 'Content-Type': 'application/json' },
                 };
 
-            case 'DELETE': // Delete news
+            case 'DELETE':
                  if (!resourceId) return { statusCode: 400, body: JSON.stringify({ message: 'Missing news ID for delete.' }) };
                 
                 const initialLength = newsData.length;
@@ -137,7 +157,7 @@ exports.handler = async (event, context) => {
                 if (updatedDataForDelete.length === initialLength) {
                      return { statusCode: 404, body: JSON.stringify({ message: 'Новость не найдена для удаления.' }) };
                 }
-                writeNewsData(updatedDataForDelete); // Simulates write
+                writeNewsData(updatedDataForDelete);
                 return {
                     statusCode: 200,
                     body: JSON.stringify({ message: 'Новость успешно удалена (изменения в памяти)' }),
